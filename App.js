@@ -102,7 +102,7 @@ function HomeScreen() {
       <View style={styles.linha}>
 
       <View style={styles.pokemon}>
-        <Button style={styles.botao} onPress={() => navigation.navigate('Profile', {idPokemon : 1})}>
+        <Button style={styles.botao} onPress={() => navigation.navigate('Profile', {idPokemon : 1, nome: pokemonEscolhido1.nome, imagem: pokemonEscolhido1.imagem, descricao: pokemonEscolhido1.descricao})}>
           <View>
         <Image
           source={{ uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png' }}
@@ -118,7 +118,7 @@ function HomeScreen() {
       </View>
 
       <View style={styles.pokemon}>
-        <Button style={styles.botao} onPress={() => navigation.navigate('Profile', {idPokemon : 2})}>
+        <Button style={styles.botao} onPress={() => navigation.navigate('Profile', {idPokemon : 2,nome: pokemonEscolhido2.nome, imagem: pokemonEscolhido2.imagem, descricao: pokemonEscolhido2.descricao})}>
           <View>
           <Image
             source={{ uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png' }}
@@ -135,7 +135,7 @@ function HomeScreen() {
 
       <View style={styles.pokemon}>
         
-        <Button style={styles.botao} onPress={() => navigation.navigate('Profile', {idPokemon : 3})}>
+        <Button style={styles.botao} onPress={() => navigation.navigate('Profile', {idPokemon : 3, nome: pokemonEscolhido3.nome, imagem: pokemonEscolhido3.imagem, descricao: pokemonEscolhido3.descricao})}>
           <View>
         <Image
           source={{ uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png' }}
@@ -159,22 +159,21 @@ function HomeScreen() {
 
 function ProfileScreen({route}) {
   const navigation = useNavigation();
-  const { idPokemon } = route.params;
+  const { idPokemon, nome, descricao } = route.params;
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <View>
-          <Image
-            source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idPokemon}.png` }}
-            style={styles.imageProfile}
-          />
-        </View>
-
-        <View>
-        <Text style={styles.textProfile}>
-          Venusaur {idPokemon}
-        </Text>
-        </View>
-
+      <View>
+        <Image
+          source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idPokemon}.png` }}
+          style={styles.imageProfile}
+        />
+      </View>
+      <Text style={styles.textProfile}>
+        {nome} {idPokemon}
+      </Text>
+      <Text style={{textAlign: 'center', paddingHorizontal: 20, fontSize: 18}}>
+        {descricao}
+      </Text>
     </View>
   );
 }
