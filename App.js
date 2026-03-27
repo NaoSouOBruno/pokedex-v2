@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import {
   createStaticNavigation,
@@ -11,8 +12,89 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 function HomeScreen() {
   const navigation = useNavigation();
 
+  const [ pokemonEscolhido1, setPokemonEscolhido1 ] = useState(null);
+  const [ pokemonEscolhido2, setPokemonEscolhido2 ] = useState(null);
+  const [ pokemonEscolhido3, setPokemonEscolhido3 ] = useState(null);
 
 
+  useEffect(() => {
+    getPokemonData('bulbasaur', 'Ivysaur', 'Venusaur');
+  }, []);
+ 
+  const getPokemonData = (nome1, nome2, nome3) => {
+  nome1 = nome1.toLowerCase();
+  const endpoint1 = `https://api.pokemontcg.io/v2/cards?q=name:${nome1}`;
+  const endpoint2 = `https://api.pokemontcg.io/v2/cards?q=name:${nome2}`;
+  const endpoint3 = `https://api.pokemontcg.io/v2/cards?q=name:${nome3}`;
+
+
+  fetch(endpoint1)
+    .then(res => {
+      if (!res.ok) throw new Error("Erro na requisição");
+      return res.json();
+    })
+    .then(json => {
+      const card = json.data[0];
+
+
+      const pokemon1 = {
+        nome: card.name,
+        imagem: card.images.small,
+        descricao: card.flavorText
+      };
+
+
+      setPokemonEscolhido1(pokemon1);
+    })
+    .catch((erro) => {
+      console.log("ERRO:", erro);
+      Alert.alert('Erro', 'Não foi possível carregar cartas');
+    });
+  fetch(endpoint2)
+    .then(res => {
+      if (!res.ok) throw new Error("Erro na requisição");
+      return res.json();
+    })
+    .then(json => {
+      const card = json.data[0];
+
+
+      const pokemon2 = {
+        nome: card.name,
+        imagem: card.images.small,
+        descricao: card.flavorText
+      };
+
+
+      setPokemonEscolhido2(pokemon2);
+    })
+    .catch((erro) => {
+      console.log("ERRO:", erro);
+      Alert.alert('Erro', 'Não foi possível carregar cartas');
+    });
+  fetch(endpoint3)
+    .then(res => {
+      if (!res.ok) throw new Error("Erro na requisição");
+      return res.json();
+    })
+    .then(json => {
+      const card = json.data[0];
+
+
+      const pokemon3 = {
+        nome: card.name,
+        imagem: card.images.small,
+        descricao: card.flavorText
+      };
+
+
+      setPokemonEscolhido3(pokemon3);
+    })
+    .catch((erro) => {
+      console.log("ERRO:", erro);
+      Alert.alert('Erro', 'Não foi possível carregar cartas');
+    });
+};
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -29,7 +111,7 @@ function HomeScreen() {
         </View>
         <View>
         <Text style={styles.text}>
-          Bulbasaur
+          {pokemonEscolhido1 ? pokemonEscolhido1.nome : 'Carregando...'}
         </Text>
         </View>
         </Button>
@@ -45,7 +127,7 @@ function HomeScreen() {
           </View>
           <View>
           <Text style={styles.text}>
-            Ivysaur
+            {pokemonEscolhido2 ? pokemonEscolhido2.nome : 'Carregando...'}
           </Text>
           </View>
         </Button>
@@ -62,7 +144,7 @@ function HomeScreen() {
         </View>
         <View>
         <Text style={styles.text}>
-          Venusaur
+          {pokemonEscolhido3 ? pokemonEscolhido3.nome : 'Carregando...'}
         </Text>
         </View>
         </Button>
@@ -89,7 +171,7 @@ function ProfileScreen({route}) {
 
         <View>
         <Text style={styles.textProfile}>
-          Venusaur {{idPokemon}}
+          Venusaur {idPokemon}
         </Text>
         </View>
 
